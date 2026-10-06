@@ -22,11 +22,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Ganate un beso',
         theme: ThemeData(
-          colorScheme: .fromSeed(seedColor: Colors.yellow),
+          colorScheme: .fromSeed(seedColor: Colors.orange),
         ),
         home: KissScreen()
       ),
     );
   }
 }
-

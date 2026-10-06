@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Action {
   String name; // this would be showed
-  VoidCallbackAction? action;
+  VoidCallback? action;
 
   Action({
     required this.name,

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:give_me_a_kiss/src/domain/entities/message.dart';
+import 'package:give_me_a_kiss/src/domain/entities/action.dart' as domain;
 
 class MessageBubble extends StatelessWidget {
   Message message;
@@ -35,16 +36,32 @@ class MessageBubble extends StatelessWidget {
         SizedBox(height: 5,),
 
         if (message.actions != null && message.actions!.isNotEmpty)
-          Row(
-            children: [
-              for (final action in message.actions!)
-                Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: Text(action.name),
-                ),
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              spacing: 5,
+              children: [
+                for (final action in message.actions!)
+                  _ChatButton(action)
+              ],
+            ),
           ),
       ],
     );
   }
+}
+
+class _ChatButton extends StatelessWidget {
+  domain.Action action;
+
+  _ChatButton(this.action);
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: action.action,
+      child: Text(action.name),
+    );
+  }
+
 }

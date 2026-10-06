@@ -2,7 +2,8 @@
 import 'package:give_me_a_kiss/src/domain/entities/action.dart';
 
 enum Who {
-  me, her
+  kisser, 
+  fan,
 }
 
 class Message {

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:give_me_a_kiss/src/presentation/providers/chat_provider.dart';
-import 'package:give_me_a_kiss/src/presentation/widgets/kiss/my_message_bubble.dart';
+import 'package:give_me_a_kiss/src/presentation/widgets/kiss/message_bubble.dart';
 import 'package:provider/provider.dart';
 
 class Chat extends StatelessWidget {
@@ -17,7 +17,7 @@ class Chat extends StatelessWidget {
       child: ListView.builder(
         itemCount: messageProvider.messages.length,
         itemBuilder: (context, i) {
-          return MyMessageBubble(text: messageProvider.messages[i].text);
+          return MessageBubble(message: messageProvider.messages[i]);
         },
       ),
     );

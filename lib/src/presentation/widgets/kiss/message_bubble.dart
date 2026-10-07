@@ -19,18 +19,15 @@ class MessageBubble extends StatelessWidget {
     return Column(
       crossAxisAlignment: messageAlignement,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Container(
-            decoration: BoxDecoration(
-              color: messageColor,
-              borderRadius: BorderRadius.circular(25)
-            ), 
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(message.text, style: TextStyle(color: Colors.white),),
-            )
-          ),
+        Container(
+          decoration: BoxDecoration(
+            color: messageColor,
+            borderRadius: BorderRadius.circular(25)
+          ), 
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(message.text, style: TextStyle(color: Colors.white),),
+          )
         ),
             
         SizedBox(height: 5,),

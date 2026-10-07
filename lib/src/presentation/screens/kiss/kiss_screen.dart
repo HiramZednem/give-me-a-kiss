@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:give_me_a_kiss/src/presentation/widgets/kiss/chat.dart';
 import 'package:give_me_a_kiss/src/presentation/widgets/kiss/kiss_stats.dart';
+import 'package:give_me_a_kiss/src/presentation/widgets/shared/input.dart';
 
 class KissScreen extends StatelessWidget {
   const new({super.key});
@@ -17,17 +18,16 @@ class KissScreen extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            KissStats(
-              opportunities: 3,
-              losses: 2,
-              wins: 1,
-              kisses: 1,
-            ),
-            Expanded(child: Chat()),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              KissStats(),
+              Expanded(child: Chat()),
+              Input(),
+            ],
+          ),
         ),
       ),
     );

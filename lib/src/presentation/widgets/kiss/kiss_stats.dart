@@ -1,22 +1,17 @@
 
 import 'package:flutter/material.dart';
+import 'package:give_me_a_kiss/src/presentation/providers/stats_provider.dart';
+import 'package:provider/provider.dart';
 
 class KissStats extends StatelessWidget {
-  int opportunities;
-  int losses;
-  int wins;
-  int kisses; 
-
-  KissStats({
-    super.key,
-    required this.opportunities,
-    required this.losses,
-    required this.wins,
-    required this.kisses
-  });
 
   @override
   Widget build(BuildContext context) {
+    int opportunities = context.watch<StatsProvider>().opportunities;
+    int losses = context.watch<StatsProvider>().losses;
+    int wins = context.watch<StatsProvider>().wins;
+    int kisses = context.watch<StatsProvider>().kisses;
+
     return Row(
       children: [
         Expanded(

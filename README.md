@@ -15,3 +15,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+# TODOS:
+- [ ] Disable button or hide button section once pressed
+- [ ] Enable input just when play button has been pressed.
+- [ ] save stats in cache
+- [ ] add more opportunities every 10 minutes (topped to 5)
+- [ ] send a notification once all the opportunities are filled
+- [ ] improve UI

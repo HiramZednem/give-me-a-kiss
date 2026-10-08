@@ -122,6 +122,7 @@ class ChatProvider extends ChangeNotifier {
           ],
         ),
       );
+      stats.loss();
       moveToBottom();
     }
   }

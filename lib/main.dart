@@ -16,15 +16,28 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => StatsProvider()),
-        ChangeNotifierProvider(create: (context) => ChatProvider(context.read<StatsProvider>())),
+        ChangeNotifierProvider(
+          create: (context) => ChatProvider(context.read<StatsProvider>()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Ganate un beso',
         theme: ThemeData(
-          colorScheme: .fromSeed(seedColor: Colors.orange),
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFFFFC928),
+            brightness: Brightness.light,
+          ),
+          scaffoldBackgroundColor: const Color(0xFFFFF9E8),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color(0xFFFFE082),
+            foregroundColor: Color(0xFF493900),
+            elevation: 0,
+            centerTitle: false,
+          ),
         ),
-        home: KissScreen()
+        home: const KissScreen(),
       ),
     );
   }

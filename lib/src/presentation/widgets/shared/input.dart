@@ -1,31 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:give_me_a_kiss/src/presentation/providers/chat_provider.dart';
-import 'package:give_me_a_kiss/src/presentation/providers/stats_provider.dart';
 import 'package:provider/provider.dart';
 
-class Input extends StatelessWidget {
+class Input extends StatefulWidget {
+  const Input({super.key});
+
+  @override
+  State<Input> createState() => _InputState();
+}
+
+class _InputState extends State<Input> {
+  final controller = TextEditingController();
+  final focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
+  void _submitAnswer() {
+    final chatProvider = context.read<ChatProvider>();
+    if (!chatProvider.canAnswer) return;
+
+    final value = int.tryParse(controller.text);
+    if (value == null) return;
+
+    chatProvider.receiveAnswer(value);
+    controller.clear();
+    focusNode.requestFocus();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = TextEditingController();
-    final focusNode = FocusNode();
+    final canAnswer = context.watch<ChatProvider>().canAnswer;
 
-    final chatProvider = context.read<ChatProvider>();
-
-    // TODO: if play hasn't started, this field should be disabled.
-      return TextFormField(
-        keyboardType: TextInputType.number,
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        controller: controller,
-        focusNode: focusNode,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+    return TextFormField(
+      controller: controller,
+      focusNode: focusNode,
+      enabled: canAnswer,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.send,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      onFieldSubmitted: (_) => _submitAnswer(),
+      decoration: InputDecoration(
+        hintText: canAnswer
+            ? 'Escribe tu respuesta...'
+            : 'Presiona "Jugar" para comenzar',
+        prefixIcon: const Icon(Icons.edit_rounded),
+        suffixIcon: IconButton(
+          tooltip: 'Enviar respuesta',
+          onPressed: canAnswer ? _submitAnswer : null,
+          icon: const Icon(Icons.send_rounded),
         ),
-        onFieldSubmitted: (value) {
-          controller.clear();
-          chatProvider.receiveAnswer(int.parse(value));
-          focusNode.requestFocus();
-        },
-      );
-    }
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding: const EdgeInsets.symmetric(vertical: 16),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: const BorderSide(color: Color(0xFFFFE082)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: const BorderSide(color: Color(0xFFE5A900), width: 1.5),
+        ),
+      ),
+    );
+  }
 }

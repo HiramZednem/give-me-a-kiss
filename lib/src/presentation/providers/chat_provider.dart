@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:give_me_a_kiss/src/domain/entities/action.dart' as domain;
 import 'package:give_me_a_kiss/src/domain/entities/message.dart';
 import 'package:give_me_a_kiss/src/presentation/providers/stats_provider.dart';
@@ -10,6 +11,7 @@ class ChatProvider extends ChangeNotifier {
   StatsProvider stats;
   final ScrollController controller = ScrollController();
   int result = 0;
+  bool canAnswer = false;
 
   ChatProvider(this.stats) {
     messages = [
@@ -25,13 +27,13 @@ class ChatProvider extends ChangeNotifier {
   }
 
   void play() async {
-    
+    canAnswer = false;
     messages.add(Message(text: 'Jugar', who: Who.fan));
     await moveToBottom();
 
     if (stats.canPlay()) {
       stats.play();
-      
+
       await Future.delayed(Duration(milliseconds: 500));
 
       int n1 = Random().nextInt(10);
@@ -39,15 +41,24 @@ class ChatProvider extends ChangeNotifier {
       result = n1 + n2;
 
       messages.add(Message(text: 'Cuanto es $n1 + $n2?', who: Who.kisser));
+      canAnswer = true;
       await moveToBottom();
     } else {
-      messages.add(Message(text: 'No tienes oportunidades disponibles, vuelve maniana 😭', who: Who.kisser));
+      messages.add(
+        Message(
+          text: 'No tienes oportunidades disponibles, vuelve maniana 😭',
+          who: Who.kisser,
+          actions: [
+            domain.Action(name: 'Cobrar', action: withdrawl),
+            domain.Action(name: 'Salir', action: SystemNavigator.pop),
+          ],
+        ),
+      );
       await moveToBottom();
     }
-    
   }
 
-  void withdrawl() async{
+  void withdrawl() async {
     messages.add(Message(text: 'Cobrar', who: Who.fan));
     await moveToBottom();
 
@@ -63,17 +74,15 @@ class ChatProvider extends ChangeNotifier {
             domain.Action(name: 'Jugar', action: play),
             domain.Action(name: 'Cobrar', action: withdrawl),
           ],
-        )
+        ),
       );
     } else {
       messages.add(
         Message(
           text: 'Ponete a chambear vos! 🙄',
           who: Who.kisser,
-          actions: [
-            domain.Action(name: 'Jugar', action: play),
-          ],
-        )
+          actions: [domain.Action(name: 'Jugar', action: play)],
+        ),
       );
     }
 
@@ -81,7 +90,9 @@ class ChatProvider extends ChangeNotifier {
   }
 
   void receiveAnswer(int value) async {
+    if (!canAnswer) return;
 
+    canAnswer = false;
     messages.add(Message(text: '$value', who: Who.fan));
     await moveToBottom();
 
@@ -97,7 +108,7 @@ class ChatProvider extends ChangeNotifier {
             domain.Action(name: 'Cobrar', action: withdrawl),
             domain.Action(name: 'Volver a Jugar', action: play),
           ],
-        )
+        ),
       );
       moveToBottom();
     } else {
@@ -109,7 +120,7 @@ class ChatProvider extends ChangeNotifier {
             domain.Action(name: 'Volver a Jugar', action: play),
             domain.Action(name: 'retirarte', action: null),
           ],
-        )
+        ),
       );
       moveToBottom();
     }

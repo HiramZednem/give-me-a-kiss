@@ -13,7 +13,7 @@ class KissScreen extends StatelessWidget {
         title: Text('Ganate un beso'),
         actions: [
           CircleAvatar(
-            backgroundColor: Colors.red,
+            backgroundImage: AssetImage('lib/src/assets/kisser.jpeg'),
           )
         ],
       ),

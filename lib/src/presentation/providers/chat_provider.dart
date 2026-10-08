@@ -36,7 +36,7 @@ class ChatProvider extends ChangeNotifier {
 
       int n1 = Random().nextInt(10);
       int n2 = Random().nextInt(10);
-      int result = n1 + n2;
+      result = n1 + n2;
 
       messages.add(Message(text: 'Cuanto es $n1 + $n2?', who: Who.kisser));
       await moveToBottom();

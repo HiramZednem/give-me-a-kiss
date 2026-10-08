@@ -15,6 +15,7 @@ class Input extends StatelessWidget{
     final chatProvider = context.read<ChatProvider>();
 
     return TextFormField(
+      keyboardType: TextInputType.number,
       controller: controller,
       focusNode: focusNode,
       decoration: InputDecoration(
@@ -22,7 +23,7 @@ class Input extends StatelessWidget{
       ),
       onFieldSubmitted: (value) {
         controller.clear();
-        chatProvider.receiveAnswer(value);
+        chatProvider.receiveAnswer(1);
         focusNode.requestFocus();
       },
     );
